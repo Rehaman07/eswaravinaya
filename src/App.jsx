@@ -369,7 +369,16 @@ function Footer() {
 }
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
+    const timer = window.setTimeout(() => setIsLoading(false), 1700);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (isLoading) return undefined;
+
     const ctx = gsap.context(() => {
       gsap.utils.toArray(".reveal").forEach((element) => {
         gsap.fromTo(
@@ -390,10 +399,11 @@ export default function App() {
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [isLoading]);
 
   return (
     <div className="min-h-screen bg-cream font-body text-ink">
+      {isLoading && <Preloader />}
       <Navbar />
       <main>
         <Hero />
@@ -404,6 +414,23 @@ export default function App() {
         <LocationCTA />
       </main>
       <Footer />
+    </div>
+  );
+}
+
+function Preloader() {
+  return (
+    <div className="fixed inset-0 z-[100] grid place-items-center bg-cream">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(255,122,0,0.22),transparent_28%),radial-gradient(circle_at_78%_72%,rgba(27,94,32,0.16),transparent_30%)]" />
+      <div className="relative flex w-[min(360px,calc(100%-48px))] flex-col items-center">
+        <div className="rounded-[28px] border border-white/70 bg-white/80 p-5 shadow-premium backdrop-blur-xl">
+          <img src={logo} alt="Eswar Vinayaka Hotel loading" className="h-20 w-auto sm:h-24" />
+        </div>
+        <p className="mt-6 font-heading text-2xl font-bold text-ink">Preparing fresh flavours</p>
+        <div className="mt-5 h-3 w-full overflow-hidden rounded-full bg-white shadow-inner">
+          <div className="h-full rounded-full bg-gradient-to-r from-saffron via-redrich to-leaf preloader-bar" />
+        </div>
+      </div>
     </div>
   );
 }
