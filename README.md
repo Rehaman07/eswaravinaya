@@ -94,8 +94,8 @@ npm run build
 ## 🙌 Author
 
 **Rehaman**
-Frontend Developer | UI/UX Enthusiast
-
+Full Stack Developer | Graphic Designer
+My Personal Portfolio : rehaman.pythonanywhere.com
 ---
 
 ## 📌 Note
